@@ -1,0 +1,8 @@
+# Files copied from the device vendor partitions.
+#
+# Format: source:path[:destination]
+# Default source and destination are vendor.
+# Keep this manifest reviewed and sorted by source path.
+#
+# The initial repository is intentionally empty until the Redmi 6A and
+# Archimedes source builds are recorded.

@@ -1,0 +1,15 @@
+# Local extraction output is never committed by default.
+# The repository's proprietary/ directory is explicitly tracked once files
+# have a reviewed source record.
+*.img
+*.bin
+*.edb
+*.muxz
+*.nvram
+*.nvdata
+*.qcn
+*.logcat
+*.pcap
+metadata/local-*
+__pycache__/
+*.pyc
