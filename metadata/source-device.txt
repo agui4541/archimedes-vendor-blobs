@@ -1,6 +1,8 @@
 source=connected Archimedes target device
 extracted_at=2026-11-10
 ro.vendor.build.fingerprint=Xiaomi/full_Archimedes/Archimedes:9/PPR1.180610.011/462:userdebug/release-keys
+ro.board.platform=mt6761
+ro.hardware=mt8766
 ro.boot.hardware=mt8766
 ro.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
 ro.build.version.incremental=191210
