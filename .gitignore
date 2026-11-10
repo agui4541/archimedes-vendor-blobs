@@ -1,7 +1,15 @@
 # Local extraction output is never committed by default.
 # The repository's proprietary/ directory is explicitly tracked once files
 # have a reviewed source record.
-*.img
+# Keep vendor firmware images. Ignore only common full-partition dump names.
+boot*.img
+system*.img
+vendor*.img
+dtbo*.img
+super*.img
+userdata*.img
+md1*.img
+expdb*.img
 # Firmware blobs may legitimately use .bin; sensitive partitions are blocked
 # by the extraction manifest and CI checks instead of a filename-only ignore.
 *.edb
