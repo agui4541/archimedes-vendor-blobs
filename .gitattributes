@@ -1,0 +1,12 @@
+# Extracted vendor files are byte-exact artifacts. Do not apply platform
+# line-ending conversion to configuration files, scripts, or firmware.
+proprietary/** -text
+
+# Repository metadata and generators remain normal UTF-8 text.
+*.md text eol=lf
+*.py text eol=lf
+*.mk text eol=lf
+*.sh text eol=lf
+*.txt text eol=lf
+*.tsv text eol=lf
+*.yml text eol=lf
