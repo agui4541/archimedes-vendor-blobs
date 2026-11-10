@@ -2,7 +2,8 @@
 # The repository's proprietary/ directory is explicitly tracked once files
 # have a reviewed source record.
 *.img
-*.bin
+# Firmware blobs may legitimately use .bin; sensitive partitions are blocked
+# by the extraction manifest and CI checks instead of a filename-only ignore.
 *.edb
 *.muxz
 *.nvram

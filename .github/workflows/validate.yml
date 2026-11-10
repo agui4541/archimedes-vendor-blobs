@@ -13,6 +13,6 @@ jobs:
       - name: Check scripts
         run: python -m py_compile tools/extract_blobs.py tools/setup_makefiles.py
       - name: Generate makefiles
-        run: ./scripts/setup-makefiles.sh
+        run: python3 tools/setup_makefiles.py
       - name: Reject sensitive paths
         run: '! grep -Eiq "(^|/)(nvram|nvdata|protect|persist|userdata|metadata)(/|$)" proprietary-files.txt'
