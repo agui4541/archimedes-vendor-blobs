@@ -1,0 +1,85 @@
+#!/system/bin/sh
+
+# Archimedes boot-loop guard.
+# Records an attempt before Android is fully up and clears it at boot complete.
+
+STATE_DIR=""
+for d in /data/local/tmp/archimedes-bootguard /metadata/archimedes-bootguard /cache/archimedes-bootguard /data/adb/archimedes-bootguard /mnt/vendor/persist/archimedes-bootguard; do
+    if [ -d "${d%/*}" ] && (mkdir -p "$d" 2>/dev/null); then
+        if touch "$d/.rw" 2>/dev/null; then
+            rm -f "$d/.rw"
+            STATE_DIR="$d"
+            break
+        fi
+    fi
+done
+
+# Metadata may be mounted just after vendor init starts.
+if [ -z "$STATE_DIR" ]; then
+    n=0
+    while [ "$n" -lt 40 ]; do
+        for d in /data/local/tmp/archimedes-bootguard /metadata/archimedes-bootguard /cache/archimedes-bootguard /data/adb/archimedes-bootguard /mnt/vendor/persist/archimedes-bootguard; do
+            if [ -d "${d%/*}" ] && mkdir -p "$d" 2>/dev/null && touch "$d/.rw" 2>/dev/null; then
+                rm -f "$d/.rw"
+                STATE_DIR="$d"
+                break 2
+            fi
+        done
+        sleep 0.25
+        n=$((n + 1))
+    done
+fi
+
+[ -n "$STATE_DIR" ] || exit 0
+
+ATTEMPTS="$STATE_DIR/attempts"
+
+if [ "$1" = "success" ]; then
+    rm -f "$ATTEMPTS" "$STATE_DIR/last-action"
+    sync
+    exit 0
+fi
+
+# Discard records older than 15 minutes so an old failure cannot combine with
+# a new one after a long period of normal operation.
+now=$(date +%s 2>/dev/null)
+[ -n "$now" ] || now=0
+tmp="$STATE_DIR/attempts.new"
+: > "$tmp" 2>/dev/null || exit 0
+if [ -f "$ATTEMPTS" ]; then
+    while IFS= read -r ts; do
+        case "$ts" in
+            ''|*[!0-9]*) continue ;;
+        esac
+        if [ "$now" -eq 0 ] || [ $((now - ts)) -lt 900 ]; then
+            echo "$ts" >> "$tmp"
+        fi
+    done < "$ATTEMPTS"
+fi
+echo "$now" >> "$tmp"
+mv -f "$tmp" "$ATTEMPTS"
+sync
+
+count=$(wc -l < "$ATTEMPTS" 2>/dev/null)
+if [ "$count" -gt 3 ]; then
+    echo "bootguard: $count incomplete boots; entering recovery" > "$STATE_DIR/last-action"
+    sync
+    sleep 1
+    /system/bin/reboot recovery
+fi
+
+# Stay alive until Android declares a successful boot.  Using an in-process
+# wait avoids relying on a property trigger from an rc file imported late on
+# this vendor image.  A normal boot clears the record; a crash/reboot leaves
+# it for the next attempt.
+i=0
+while [ "$i" -lt 120 ]; do
+    if [ "$(/system/bin/getprop sys.boot_completed 2>/dev/null)" = "1" ]; then
+        rm -f "$ATTEMPTS" "$STATE_DIR/last-action"
+        sync
+        exit 0
+    fi
+    sleep 1
+    i=$((i + 1))
+done
+

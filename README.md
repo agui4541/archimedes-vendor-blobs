@@ -56,7 +56,18 @@ The extractor reads `proprietary-files.txt`, writes into `proprietary/`, and upd
 
 ## Current status
 
-The repository starts as a clean scaffold. The first donor data to add is the Redmi 6A original vendor/modem stack, followed by the Archimedes retail and engineering variants. Files are merged only after their ABI, SELinux context, architecture, and firmware provenance are recorded.
+The `main` branch now contains a regular-file snapshot of the connected
+Archimedes vendor partition, including the MTK RIL/IMS, Wi-Fi/Bluetooth,
+camera, audio, display, sensor, firmware, and kernel-module files currently
+visible to the target system. The snapshot is tagged in
+`metadata/source-device.txt` and every file has a SHA-256 row in
+`metadata/extracted-files.tsv`.
+
+This is a device snapshot, not yet a clean Redmi 6A donor merge. The next
+comparison source is the Redmi 6A stock vendor/modem stack; files are merged
+only after their ABI, SELinux context, architecture, and firmware provenance
+are reviewed. Debug-only files present on the target snapshot must be reviewed
+before they are used as a release baseline.
 
 ## License
 

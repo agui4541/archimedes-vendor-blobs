@@ -1,0 +1,9 @@
+# Archimedes early-ADB rescue configuration.
+# Keep this file separate from the normal USB policy so it can be removed
+# without changing the vendor USB implementation.
+
+on early-init
+    setprop persist.sys.usb.config adb
+
+on property:sys.usb.configfs=1
+    setprop sys.usb.config adb

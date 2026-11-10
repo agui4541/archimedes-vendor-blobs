@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameter>
+  <item name="Config">
+    <param key="TpColorFile1" value="/sys/bus/i2c/devices/0-0038/tp_lock_down_info"/>
+    <param key="TpColorFile2" value="/sys/bus/i2c/devices/3-0014/tp_lock_down_info"/>
+    <param key="TpColorFile3" value="/sys/bus/i2c/devices/4-004a/misc"/>
+
+  </item>
+
+  <item name="SoftVersion">
+    <param key="TestVeriFiedBootState" value="true"/>
+  </item>
+
+  <item name="LED">
+    <param key="hasBacklight" value="true"/>
+    <param key="hasWhiteLED" value="true"/>
+    <param key="hasRedLED" value="false"/>
+    <param key="hasGreenLED" value="false"/>
+    <param key="hasBlueLED" value="false"/>
+    <param key="hasBackTorch" value="false"/>
+    <param key="hasBackTorch2" value="false"/>
+    <param key="hasFrontTorch" value="false"/>
+    <param key="hasKeyLED" value="false"/>
+  </item>
+
+<!--
+  <item name="MIC">
+    <param key="Mic1Vol" value="10"/>
+    <param key="Mic2Vol" value="10"/>
+  </item>
+-->
+
+  <item name="Camera">
+    <param key="BackCameraRotate" value="0"/>
+  </item>
+
+<!--
+  <item name="SAR_SENSOR">
+    <param key="SarStrategiesEnable" value="true"/>
+    <param key="SarFactoryEnable" value="true"/>
+    <param key="PackageName" value="com.longcheertel.cit"/>
+    <param key="ServiceName" value="com.longcheertel.cit.SarStrategiesService"/>
+  </item>
+
+  <item name="2008">
+    <param key="WcnssChip" value="3615"/>
+  </item>
+-->
+
+</parameter>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<testitem item_name="lcd_test" item_action="LcdMoreColor" />
+    <testitem item_name="led_test" item_action="LedRandomNew" />
+    <testitem item_name="touchpanel_test" item_action="Touchpanel_v2" />
+    <testitem item_name="light_sensor_test" item_action="LightSensor_old"/>
+	<testitem item_name="back_camera0" item_action="BackCamera" />
+	<testitem item_name="sim_status_test" item_action="MultipleSimStatusCheck" />
+	<testitem item_name="otg_in_test" item_action="CitOtgIn" />
+	<testitem item_name="charger_in_test" item_action="ChargeInAndOutActivity" />
+	<testitem item_name="wifi_test" item_action="Wifi" />
+	<testitem item_name="bluetooth" item_action="Bluetooth" />
+</resources>

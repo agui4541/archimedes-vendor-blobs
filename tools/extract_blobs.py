@@ -6,7 +6,7 @@ The manifest uses lines of the form:
 Blank lines and comments are ignored. The tool refuses sensitive partitions.
 """
 from __future__ import annotations
-import argparse, hashlib, os, shlex, subprocess, sys
+import argparse, hashlib, os, subprocess
 from pathlib import Path
 
 SENSITIVE = ("nvram", "nvdata", "protect", "persist", "userdata", "metadata")
@@ -30,15 +30,27 @@ def parse_manifest():
         rows.append((source,path,dest))
     return rows
 
-def adb_pull(path: str, dst: Path):
+ADB_ROOT = {
+    "system": "/system",
+    "system_ext": "/system_ext",
+    "product": "/product",
+    "vendor": "/vendor",
+    "odm": "/odm",
+    "firmware": "/vendor/firmware",
+}
+
+
+def adb_pull(source: str, path: str, dst: Path, adb: str):
     dst.parent.mkdir(parents=True, exist_ok=True)
     # Use adb pull so SELinux labels and permissions are not silently guessed.
-    subprocess.run(["adb","pull",f"/{path}",str(dst)],check=True)
+    subprocess.run([adb, "pull", f"{ADB_ROOT[source]}/{path}", str(dst)], check=True)
 
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--adb",action="store_true",help="pull from the connected device")
     ap.add_argument("--source",type=Path,help="root of a local partition dump")
+    ap.add_argument("--adb-bin", default=os.environ.get("ARCHIMEDES_ADB", "adb"),
+                    help="ADB executable (default: ARCHIMEDES_ADB or adb)")
     args=ap.parse_args()
     if args.adb == bool(args.source):
         ap.error("choose exactly one of --adb or --source")
@@ -49,9 +61,11 @@ def main():
             raise SystemExit(f"unsupported source partition: {source}")
         out=OUT / dest
         if args.adb:
-            adb_pull(path,out)
+            adb_pull(source, path, out, args.adb_bin)
         else:
-            src=args.source / path
+            src=args.source / source / path
+            if not src.is_file() and source == "firmware":
+                src=args.source / "vendor" / "firmware" / path
             if not src.is_file(): raise SystemExit(f"missing local source: {src}")
             out.parent.mkdir(parents=True,exist_ok=True)
             out.write_bytes(src.read_bytes())

@@ -7,7 +7,7 @@ Each row should include:
 - original path
 - destination path
 - SHA-256
-- architecture (`32`, `64`, or `both`)
+- architecture (`32`, `64`, `both`, or `data` for non-ELF assets)
 - extraction date
 - notes about ABI, SELinux label, and known dependencies
 

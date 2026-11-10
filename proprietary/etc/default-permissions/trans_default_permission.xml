@@ -1,0 +1,26 @@
+<exceptions>
+   <exception package="com.xiaomi.translator">
+      <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="true"/>
+      <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="true"/>
+      <permission name="android.permission.RECORD_AUDIO" fixed="true"/>
+      <permission name="android.permission.READ_PHONE_STATE" fixed="true"/>
+      <permission name="android.permission.CAMERA" fixed="true"/>
+      <permission name="android.permission.READ_CALENDAR" fixed="true"/>
+      <permission name="android.permission.WRITE_CALENDAR" fixed="true"/>
+      <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="true"/>
+      <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="true"/>
+   </exception> 
+   <exception package="com.baidu.input">
+      <permission name="android.permission.READ_EXTERNAL_STORAGE" fixed="true"/>
+      <permission name="android.permission.WRITE_EXTERNAL_STORAGE" fixed="true"/>
+      <permission name="android.permission.READ_PHONE_STATE" fixed="true"/>
+      <permission name="android.permission.READ_CONTACTS" fixed="true"/>
+      <permission name="android.permission.ACCESS_COARSE_LOCATION" fixed="true"/>
+      <permission name="android.permission.ACCESS_FINE_LOCATION" fixed="true"/>
+   </exception> 
+   <exception package="com.xiaomi.translator.accountmgr">
+      <permission name="android.permission.READ_PHONE_STATE" fixed="true"/>
+      <permission name="android.permission.READ_SMS" fixed="true"/>
+      <permission name="android.permission.RECEIVE_SMS" fixed="true"/>
+   </exception>
+</exceptions>
